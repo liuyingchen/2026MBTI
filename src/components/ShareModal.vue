@@ -50,9 +50,9 @@
         <button
           @click="closeModal"
           class="py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 hover:scale-105 active:scale-95"
-          style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+          style="background: linear-gradient(135deg,rgb(14, 14, 15) 0%,rgb(3, 3, 3) 100%)"
         >
-          Done
+          close
         </button>
       </div>
     </div>

@@ -13,7 +13,7 @@ export const CHARACTER_LIST = {
   },
   jiji: {
     name: "Jiji",
-    chineseName: "鸡鸡",
+    chineseName: "几几",
     image: "/images/jiji.jpg",
     color: "#FFD700",
     bgGradient: "from-yellow-400 to-orange-400"

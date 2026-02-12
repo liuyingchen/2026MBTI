@@ -3,6 +3,20 @@
     <!-- 背景图片 -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none bg-cover bg-center" style="background-image: url('/images/result-bg.jpg');"></div>
 
+    <!-- 春节装饰 - 闪烁星星（高层级，始终显示在前） -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden stars-layer">
+      <div v-for="star in 12" :key="`star-${star}`" class="floating-star" :style="{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`, animationDelay: `${star * 0.25}s` }">
+        ✨
+      </div>
+    </div>
+
+    <!-- 漂浮的灯笼（高层级，始终显示在前） -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden lantern-layer">
+      <div v-for="lantern in 5" :key="`lantern-${lantern}`" class="falling-lantern" :style="{ left: `${lantern * 20}%`, animationDelay: `${lantern * 0.8}s` }">
+        🏮
+      </div>
+    </div>
+
     <!-- 内容区域 -->
     <div class="relative flex flex-col items-center min-h-screen px-6 py-12 md:py-16 lg:py-20">
       <!-- 顶部空间 -->
@@ -13,19 +27,19 @@
         <!-- 结果卡片容器 - 只显示角色图片 -->
         <div
           ref="cardElement"
-          class="w-full rounded-2xl result-card overflow-hidden"
+          class="w-full rounded-2xl result-card overflow-hidden horse-animation"
           :style="{ maxWidth: '360px', aspectRatio: '3 / 4' }"
         >
           <!-- 角色图片 -->
           <img 
             :src="characterImage" 
             :alt="character.chineseName"
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover image-animate"
           />
 
           <!-- 隐藏的分享文本 -->
           <div class="hidden">
-            <p>{{ character.name }} - {{ character.chineseName }}</p>
+            <p>{{ character.name }}</p>
           </div>
         </div>
       </div>
@@ -89,9 +103,100 @@
 </template>
 
 <style scoped>
+  /* 确保页面容器允许溢出的动画显示 */
+  .result-page {
+    overflow: visible;
+    position: relative;
+  }
+
+  /* 星星和灯笼层级管理 */
+  .stars-layer {
+    z-index: 10;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  .lantern-layer {
+    z-index: 9;
+    pointer-events: none;
+    overflow: visible;
+  }
+
   .result-card {
     animation: slide-up 0.8s ease-out;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.3);
+    position: relative;
+    z-index: 5;
+  }
+
+  /* 马年卡片摇动动画 */
+  .horse-animation {
+    animation: slide-up 0.8s ease-out, card-shake 3s ease-in-out infinite 1.5s;
+  }
+
+  @keyframes card-shake {
+    0%, 100% {
+      transform: translateY(0) rotateZ(0deg) scale(1);
+    }
+    25% {
+      transform: translateY(-4px) rotateZ(-0.5deg) scale(1.02);
+    }
+    50% {
+      transform: translateY(2px) rotateZ(0.5deg) scale(1.01);
+    }
+    75% {
+      transform: translateY(-2px) rotateZ(-0.3deg) scale(1.015);
+    }
+  }
+
+  /* 图片动画效果 */
+  .image-animate {
+    animation: image-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes image-pulse {
+    0%, 100% {
+      filter: brightness(1) drop-shadow(0 0 10px rgba(255, 215, 0, 0));
+    }
+    50% {
+      filter: brightness(1.05) drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+    }
+  }
+
+  /* 闪烁星星动画 */
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .floating-star {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: twinkle 2.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  /* 漂浮灯笼动画 */
+  @keyframes falling {
+    0% {
+      opacity: 1;
+      transform: translateY(-100vh) rotateZ(0deg);
+    }
+    100% {
+      opacity: 0.3;
+      transform: translateY(100vh) rotateZ(360deg);
+    }
+  }
+
+  .falling-lantern {
+    position: absolute;
+    font-size: 2rem;
+    animation: falling 6s linear infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
   }
 
   .card-gradient-1 {
@@ -261,7 +366,7 @@ const saveCardImage = async () => {
 
 const shareOnTwitter = () => {
   const url = window.location.href;
-  const text = `I'm ${character.value.name} (${character.value.chineseName}) in Your 2026 Gala MBTI! 🎉`;
+  const text = `I'm ${character.value.name}  in Your 2026 Gala MBTI! 🎉`;
   const shareUrl = generateTwitterShareLink(text, url);
   openShareWindow(shareUrl, "Twitter Share");
 };
@@ -274,7 +379,7 @@ const shareOnFacebook = () => {
 
 const shareOnWhatsApp = () => {
   const url = window.location.href;
-  const text = `I'm ${character.value.name} (${character.value.chineseName}) in Your 2026 Gala MBTI! 🎉 ${url}`;
+  const text = `I'm ${character.value.name}  in Your 2026 Gala MBTI! 🎉 ${url}`;
   const shareUrl = generateWhatsAppShareLink(text);
   openShareWindow(shareUrl, "WhatsApp Share");
 };
