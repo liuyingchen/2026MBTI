@@ -14,6 +14,7 @@
       <ResultPage
         v-else-if="currentPage === 'result'"
         :personality="currentPersonality"
+        :answers="currentAnswers"
         @restart="restartQuiz"
         key="result"
       />
@@ -31,6 +32,7 @@ import { getPersonalityResult } from "./utils/logic.js";
 
 const currentPage = ref("landing");
 const currentPersonality = ref(null);
+const currentAnswers = ref([]);
 
 const goToIntro = () => {
   currentPage.value = "intro";
@@ -49,6 +51,7 @@ const goToQuiz = () => {
 };
 
 const handleQuizComplete = (answers) => {
+  currentAnswers.value = answers;
   currentPersonality.value = getPersonalityResult(answers);
   currentPage.value = "result";
 };
@@ -56,6 +59,7 @@ const handleQuizComplete = (answers) => {
 const restartQuiz = () => {
   currentPage.value = "landing";
   currentPersonality.value = null;
+  currentAnswers.value = [];
 };
 </script>
 

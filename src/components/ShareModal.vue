@@ -89,7 +89,7 @@ const downloadNow = () => {
 .share-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);  /* 降低黑色遮罩透明度，从 0.5 改为 0.3，减少对图片的颜色影响 */
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;

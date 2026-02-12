@@ -1,17 +1,7 @@
 <template>
   <div class="quiz-page">
-    <!-- 背景装饰 - 喜庆的红金搭配 -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div
-        class="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-12 bg-red-600"
-      ></div>
-      <div
-        class="absolute top-1/3 right-0 w-80 h-80 rounded-full blur-3xl opacity-10 bg-yellow-400"
-      ></div>
-      <div
-        class="absolute bottom-0 left-1/3 w-96 h-96 rounded-full blur-3xl opacity-8 bg-red-500"
-      ></div>
-    </div>
+    <!-- 背景图片 -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none bg-cover bg-center" style="background-image: url('/images/quiz-bg.jpg');"></div>
 
     <!-- 返回按钮 -->
     <button
@@ -25,67 +15,76 @@
     </button>
 
     <!-- 内容区域 -->
-    <div class="relative flex flex-col items-center justify-center min-h-screen px-6 py-12">
-      <!-- 进度条 -->
-      <div class="w-full max-w-md mb-8">
-        <div class="flex justify-between items-center mb-3">
-          <span class="text-sm font-semibold text-gray-600">
-            Question {{ currentIndex + 1 }}/{{ totalQuestions }}
-          </span>
-          <span class="text-xs text-gray-400">
-            {{ Math.round(progress) }}%
-          </span>
-        </div>
-        <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            class="h-full bg-gradient-to-r from-red-500 to-yellow-500 transition-all duration-500"
-            :style="{ width: `${progress}%` }"
-          ></div>
-        </div>
-      </div>
+    <div class="relative flex flex-col items-center min-h-screen px-6 py-12 md:py-16 lg:py-20">
+      <!-- 顶部空间 -->
+      <div class="flex-[0.30]"></div>
 
-      <!-- 卡片容器 - 支持滑动动画 -->
-      <div class="relative w-full max-w-md h-96 mb-8 perspective">
-        <transition name="slide" mode="out-in">
-          <div
-            :key="currentIndex"
-            class="absolute inset-0 bg-white rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center"
-          >
-            <!-- 问题文本 -->
-            <h2 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8">
-              {{ currentQuestion.question }}
-            </h2>
-
-            <!-- 选项按钮容器 -->
-            <div class="w-full space-y-4">
-              <button
-                v-for="(option, idx) in currentQuestion.options"
-                :key="idx"
-                @click="selectOption(option.value)"
-                class="option-button w-full py-4 px-6 rounded-xl font-semibold text-lg text-white transition-all duration-300 hover:scale-105 active:scale-95"
-                :class="idx === 0 ? 'option-a' : 'option-b'"
-              >
-                {{ option.text }}
-              </button>
-            </div>
-
-            <!-- 最小触控区域提示（手机端） -->
-            <p class="text-xs text-gray-400 mt-8 text-center md:hidden">
-              Tap to select
-            </p>
+      <!-- 进度条和卡片区域 -->
+      <div class="flex flex-col items-center flex-[0.50] w-full">
+        <!-- 进度条 -->
+        <div class="w-full max-w-md mb-6">
+          <div class="flex justify-between items-center mb-3">
+            <span class="text-sm font-semibold text-gray-600">
+              Question {{ currentIndex + 1 }}/{{ totalQuestions }}
+            </span>
+            <span class="text-xs text-gray-400">
+              {{ Math.round(progress) }}%
+            </span>
           </div>
-        </transition>
+          <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              class="h-full bg-gradient-to-r from-red-500 to-yellow-500 transition-all duration-500"
+              :style="{ width: `${progress}%` }"
+            ></div>
+          </div>
+        </div>
+
+        <!-- 卡片容器 - 支持滑动动画 -->
+        <div class="relative w-full max-w-md flex-1 perspective">
+          <transition name="slide" mode="out-in">
+            <div
+              :key="currentIndex"
+              class="absolute inset-0 bg-gradient-to-br from-white via-red-50 to-yellow-50 rounded-3xl shadow-2xl p-8 flex flex-col justify-center items-center border-2 border-red-100"
+            >
+              <!-- 问题文本 -->
+              <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-yellow-500">
+                {{ currentQuestion.question }}
+              </h2>
+
+              <!-- 选项按钮容器 -->
+              <div class="w-full space-y-4">
+                <button
+                  v-for="(option, idx) in currentQuestion.options"
+                  :key="idx"
+                  @click="selectOption(option.value)"
+                  class="option-button w-full py-4 px-6 rounded-full font-semibold text-lg text-white transition-all duration-300 hover:scale-105 active:scale-95 border-2 border-white/30 backdrop-blur-sm"
+                  :class="idx === 0 ? 'option-a' : 'option-b'"
+                >
+                  {{ option.text }}
+                </button>
+              </div>
+
+              <!-- 最小触控区域提示（手机端） -->
+              <p class="text-xs text-gray-400 mt-8 text-center md:hidden">
+                Tap to select
+              </p>
+            </div>
+          </transition>
+        </div>
       </div>
 
-      <!-- 返回按钮（可选） -->
-      <div class="flex gap-4 text-sm">
-        <button
-          v-if="currentIndex > 0"
-          @click="previousQuestion"
-          class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-        >
-          ← Back
-        </button>
+      <!-- 底部空间 -->
+      <div class="flex-[0.30] flex flex-col items-center justify-start w-full">
+        <!-- 返回按钮（可选） -->
+        <div class="flex gap-4 text-sm mt-6">
+          <button
+            v-if="currentIndex > 0"
+            @click="previousQuestion"
+            class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+          >
+            ← Back
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -116,13 +115,13 @@
       }
 
       .option-a {
-        background: linear-gradient(135deg, rgba(220, 20, 60, 0.8) 0%, rgba(255, 107, 107, 0.8) 100%);
-        box-shadow: 0 8px 24px rgba(220, 20, 60, 0.3);
+        background: linear-gradient(135deg, #dc143c 0%, #ff6b6b 100%);
+        box-shadow: 0 12px 32px rgba(220, 20, 60, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
       }
 
       .option-b {
-        background: linear-gradient(135deg, rgba(255, 193, 7, 0.8) 0%, rgba(255, 152, 0, 0.8) 100%);
-        box-shadow: 0 8px 24px rgba(255, 193, 7, 0.3);
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        box-shadow: 0 12px 32px rgba(255, 152, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
       }
 
       @media (max-width: 768px) {
