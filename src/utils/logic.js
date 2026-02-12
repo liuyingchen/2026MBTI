@@ -29,8 +29,13 @@ export function detectDevice() {
  * @returns {string} Twitter 分享链接
  */
 export function generateTwitterShareLink(text, url) {
+  // 确保 URL 有完整的 https:// 协议
+  let fullUrl = url;
+  if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+    fullUrl = 'https://' + fullUrl;
+  }
   const encodedText = encodeURIComponent(text);
-  const encodedUrl = encodeURIComponent(url);
+  const encodedUrl = encodeURIComponent(fullUrl);
   return `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
 }
 
@@ -40,7 +45,12 @@ export function generateTwitterShareLink(text, url) {
  * @returns {string} Facebook 分享链接
  */
 export function generateFacebookShareLink(url) {
-  const encodedUrl = encodeURIComponent(url);
+  // 确保 URL 有完整的 https:// 协议
+  let fullUrl = url;
+  if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+    fullUrl = 'https://' + fullUrl;
+  }
+  const encodedUrl = encodeURIComponent(fullUrl);
   return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
 }
 
@@ -50,7 +60,12 @@ export function generateFacebookShareLink(url) {
  * @returns {string} WhatsApp 分享链接
  */
 export function generateWhatsAppShareLink(text) {
-  const encodedText = encodeURIComponent(text);
+  // 确保文本中的 URL 有完整的 https:// 协议
+  let fullText = text;
+  if (fullText.includes('pages.dev') && !fullText.includes('https://')) {
+    fullText = fullText.replace(/(\w+\.pages\.dev)/g, 'https://$1');
+  }
+  const encodedText = encodeURIComponent(fullText);
   return `https://wa.me/?text=${encodedText}`;
 }
 

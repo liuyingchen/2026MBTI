@@ -280,6 +280,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import ShareModal from "./ShareModal.vue";
+import audioManager from "../utils/audioManager.js";
 import { generateCardImage, downloadImage } from "../utils/canvas.js";
 import {
   generateTwitterShareLink,
@@ -385,6 +386,9 @@ const shareOnWhatsApp = () => {
 };
 
 const restartQuiz = () => {
+  // 停止音乐
+  audioManager.stop();
+  // 触发重新开始
   emit("restart");
 };
 </script>

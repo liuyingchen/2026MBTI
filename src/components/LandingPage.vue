@@ -197,9 +197,15 @@
     </style>
 
 <script setup>
+import audioManager from '../utils/audioManager.js';
+import quizMusic from '../assets/audio/quiz-music.mp3';
+
 const emit = defineEmits(["start"]);
 
 const startQuiz = () => {
+  // 播放音乐
+  audioManager.play(quizMusic);
+  // 触发页面导航
   emit("start");
 };
 </script>
