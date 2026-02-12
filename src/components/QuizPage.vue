@@ -6,7 +6,7 @@
     <!-- 返回按钮 -->
     <button
       @click="goBack"
-      class="absolute top-6 left-6 z-50 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+      class="absolute top-6 left-6 z-50 text-black hover:text-gray-600 transition-colors cursor-pointer"
       aria-label="Go back"
     >
       <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

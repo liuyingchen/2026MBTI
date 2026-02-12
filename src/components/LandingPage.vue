@@ -10,7 +10,7 @@
 
       <!-- 标题区域 -->
       <div class="text-center animate-fade-in">
-        <h1 class="text-4xl md:text-5xl font-light mb-20 md:mb-28 lg:mb-32 tracking-wide">
+        <h1 class="text-3xl md:text-4xl font-light mb-20 md:mb-28 lg:mb-32 tracking-wide">
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-300 to-yellow-600">
             Your 2026 Gala MBTI
           </span>
@@ -38,7 +38,7 @@
           class="relative px-8 py-4 md:px-12 md:py-5 text-lg md:text-xl font-bold rounded-full transition-all duration-300 hover:scale-105 active:scale-95 cta-btn"
         >
           Start Quiz
-          <span class="ml-2">→</span>
+          <span class="ml-2">✨</span>
         </button>
       </div>
     </div>

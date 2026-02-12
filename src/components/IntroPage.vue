@@ -6,7 +6,7 @@
     <!-- 返回按钮 -->
     <button
       @click="goBack"
-      class="absolute top-6 left-6 z-50 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+      class="absolute top-6 left-6 z-50 text-black hover:text-gray-600 transition-colors cursor-pointer"
       aria-label="Go back"
     >
       <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -21,7 +21,7 @@
 
       <!-- 标题区域 -->
       <div class="text-center animate-fade-in flex flex-col flex-[0.13] justify-between">
-        <h2 class="text-4xl md:text-5xl font-light tracking-wide">
+        <h2 class="text-4xl md:text-4xl font-light tracking-wide" style="font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700;">
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-300 to-yellow-600">
             Just 4 easy questions
           </span>
@@ -46,7 +46,7 @@
         </button>
 
         <!-- 底部进度提示 -->
-        <p class="text-xs md:text-sm text-gray-400 text-center">
+        <p class="text-xs md:text-sm text-transparent bg-clip-text bg-gradient-to-r from-yellow-100 via-yellow-200 to-yellow-400 text-center font-light">
           Only takes about 30 seconds
         </p>
       </div>

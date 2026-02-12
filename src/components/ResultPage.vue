@@ -71,7 +71,7 @@
         <!-- 重新测试按钮 -->
         <button
           @click="restartQuiz"
-          class="w-full py-3 px-6 rounded-xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95 retake-btn max-w-md"
+          class="w-full py-3 px-6 rounded-xl font-light transition-all duration-300 hover:scale-105 active:scale-95 retake-btn max-w-md"
         >
           Retake Quiz
         </button>
@@ -142,14 +142,14 @@
 
   .retake-btn {
     background: transparent;
-    color: #999;
-    border: 2px solid #999;
+    color: #000;
+    border: 2px solid #000;
     box-shadow: none;
   }
   
   .retake-btn:hover {
-    color: #666;
-    border-color: #666;
+    color: #333;
+    border-color: #333;
   }
 
   @keyframes slide-up {
